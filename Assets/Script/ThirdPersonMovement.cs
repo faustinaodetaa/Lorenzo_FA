@@ -9,6 +9,7 @@ public class ThirdPersonMovement : PlayerController
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
     Animator animator;
+      public float rotationSpeed = 3f;
 
     protected override void Start()
     {
@@ -20,11 +21,12 @@ public class ThirdPersonMovement : PlayerController
     // Update is called once per frame
     protected override void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if (direction.magnitude >= 0.1f)
+        var horizontal = Input.GetAxis("Horizontal");   
+        var vertical = Input.GetAxis("Vertical");       
+        var direction = Vector3.forward * vertical + Vector3.right * horizontal;
+
+        if (direction.magnitude > 0.1f)
         {
 
             float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg + cam.eulerAngles.y;
@@ -34,6 +36,7 @@ public class ThirdPersonMovement : PlayerController
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir * speed * Time.deltaTime);
             animator.SetBool("IsWalking", true);
+
         }
         else
         {
@@ -41,6 +44,11 @@ public class ThirdPersonMovement : PlayerController
         }
 
         base.Update();
+
+    }
+    void LateUpdate()
+    {
+        cam.transform.position = transform.position + Vector3.back * 5 + Vector3.up;
 
     }
 

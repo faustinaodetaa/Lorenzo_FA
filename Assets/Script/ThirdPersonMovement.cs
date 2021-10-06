@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class ThirdPersonMovement : PlayerController
 {
-
-
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
     Animator animator;
-      public float rotationSpeed = 3f;
+    public float rotationSpeed = 3f;
 
     protected override void Start()
     {
@@ -22,11 +20,12 @@ public class ThirdPersonMovement : PlayerController
     protected override void Update()
     {
 
-        var horizontal = Input.GetAxis("Horizontal");   
-        var vertical = Input.GetAxis("Vertical");       
-        var direction = Vector3.forward * vertical + Vector3.right * horizontal;
+        var horizontal = Input.GetAxisRaw("Horizontal");   
+        var vertical = Input.GetAxisRaw("Vertical");       
+        //var direction = Vector3.forward * vertical + Vector3.right * horizontal;
+        var direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if (direction.magnitude > 0.1f)
+        if (direction.magnitude >= 0.1f)
         {
 
             float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg + cam.eulerAngles.y;
@@ -34,7 +33,7 @@ public class ThirdPersonMovement : PlayerController
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir * speed * Time.deltaTime);
+            controller.Move(moveDir.normalized * speed * Time.deltaTime);
             animator.SetBool("IsWalking", true);
 
         }

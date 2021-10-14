@@ -8,12 +8,14 @@ public class ThirdPersonMovement : PlayerController
     float turnSmoothVelocity;
     Animator animator;
     public float rotationSpeed = 3f;
+    RaycastWeapon weapon;
 
     protected override void Start()
     {
         controller = GetComponent<CharacterController>();
         velocity.y = 0;
         animator = GetComponent<Animator>();
+        weapon = GetComponentInChildren < RaycastWeapon>();
     }
 
     // Update is called once per frame
@@ -49,6 +51,21 @@ public class ThirdPersonMovement : PlayerController
     {
         cam.transform.position = transform.position + Vector3.back * 5 + Vector3.up;
 
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            weapon.StartFiring();
+        }
+        if (weapon.isFiring)
+        {
+            weapon.UpdateFiring(Time.deltaTime);
+        }
+        weapon.UpdateBullets(Time.deltaTime);
+        if (Input.GetButtonUp("Fire1"))
+        {
+            weapon.StopFiring();
+        }
+    
     }
 
 

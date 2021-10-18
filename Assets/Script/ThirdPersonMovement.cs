@@ -11,6 +11,10 @@ public class ThirdPersonMovement : PlayerController
     public float rotationSpeed = 3f;
     RaycastWeapon weapon;
     //Rig aimLayer;
+    public Transform cameraLookAt;
+    public Cinemachine.AxisState xAxis;
+    public Cinemachine.AxisState yAxis;
+    int isAimingParam = Animator.StringToHash("isAiming");
 
     protected override void Start()
     {
@@ -30,6 +34,14 @@ public class ThirdPersonMovement : PlayerController
         var vertical = Input.GetAxisRaw("Vertical");       
         //var direction = Vector3.forward * vertical + Vector3.right * horizontal;
         var direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+        xAxis.Update(Time.fixedDeltaTime);
+        yAxis.Update(Time.fixedDeltaTime);
+
+        cameraLookAt.eulerAngles = new Vector3(yAxis.Value, xAxis.Value, 0);
+
+        bool isAiming = Input.GetMouseButton(1);
+        animator.SetBool(isAimingParam, isAiming);
 
         if (direction.magnitude >= 0.1f)
         {
@@ -53,6 +65,8 @@ public class ThirdPersonMovement : PlayerController
 
 
     }
+
+
     void LateUpdate()
     {
         cam.transform.position = transform.position + Vector3.back * 5 + Vector3.up;

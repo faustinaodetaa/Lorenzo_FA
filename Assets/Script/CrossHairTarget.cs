@@ -17,11 +17,12 @@ public class CrossHairTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-        ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+        //Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        //ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
         ray.origin = mainCamera.transform.position;
-        //ray.direction = mainCamera.transform.forward;
+        //Debug.Log(ray.origin);
+        ray.direction = mainCamera.transform.forward;
         Physics.Raycast(ray, out hitInfo);
         transform.position = hitInfo.point;
     }

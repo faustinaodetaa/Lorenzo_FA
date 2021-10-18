@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Bullet
+  - Skill
+  - DoubleDamage
+  - Health
+  - Ammo
+  - PainKiller
+  - Shield
   layers:
   - Default
   - TransparentFX
@@ -15,7 +21,7 @@ TagManager:
   - Ground
   - Floor
   - Wall
-  - 
+  - Pickup
   - 
   - 
   - 

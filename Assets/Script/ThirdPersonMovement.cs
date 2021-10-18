@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using UnityEngine.Animations.Rigging;
 
 public class ThirdPersonMovement : PlayerController
 {
@@ -9,6 +10,7 @@ public class ThirdPersonMovement : PlayerController
     Animator animator;
     public float rotationSpeed = 3f;
     RaycastWeapon weapon;
+    //Rig aimLayer;
 
     protected override void Start()
     {
@@ -16,6 +18,8 @@ public class ThirdPersonMovement : PlayerController
         velocity.y = 0;
         animator = GetComponent<Animator>();
         weapon = GetComponentInChildren < RaycastWeapon>();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -45,6 +49,8 @@ public class ThirdPersonMovement : PlayerController
         }
 
         base.Update();
+
+
 
     }
     void LateUpdate()

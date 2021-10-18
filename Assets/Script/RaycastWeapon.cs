@@ -92,9 +92,9 @@ public class RaycastWeapon : MonoBehaviour
     void RaycastSegment(Vector3 start, Vector3 end, Bullet bullet)
     {
         Vector3 direction = end - start;
-        float distance = (end - start).magnitude;
+        float distance = direction.magnitude;
         ray.origin = start;
-        ray.direction = direction;
+        ray.direction = end - start;
         if (Physics.Raycast(ray, out hitInfo, distance))
         {
             //Debug.DrawLine(ray.origin, hitInfo.point, Color.red, 1.0f);

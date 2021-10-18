@@ -15,6 +15,8 @@ public class PauseMenu : MonoBehaviour
         //Debug.Log("tes update");
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             if (GameIsPaused)
             {
                 Resume();

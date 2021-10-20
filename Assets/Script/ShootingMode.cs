@@ -11,20 +11,20 @@ public class ShootingMode : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            if (Shooting)
-            {
-                MainCam.SetActive(true);
-                ShootingCam.SetActive(false);
-                Shooting = false;
-            }
-            else
-            {
-                MainCam.SetActive(false);
-                ShootingCam.SetActive(true);
-                Shooting = true;
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    if (Shooting)
+        //    {
+        //        MainCam.SetActive(true);
+        //        ShootingCam.SetActive(false);
+        //        Shooting = false;
+        //    }
+        //    else
+        //    {
+        //        MainCam.SetActive(false);
+        //        ShootingCam.SetActive(true);
+        //        Shooting = true;
+        //    }
+        //}
     }
 }

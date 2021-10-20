@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.Animations.Rigging;
+using UnityEngine.Animations.Rigging;
 
 public class ThirdPersonMovement : PlayerController
 {
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
     Animator animator;
-    public float rotationSpeed = 3f;
     RaycastWeapon weapon;
-    //Rig aimLayer;
+    public float rotationSpeed = 3f;
+    public float aimDuration = 0.3f;
+    public Rig aimLayer;
     public Transform cameraLookAt;
     public Cinemachine.AxisState xAxis;
     public Cinemachine.AxisState yAxis;
@@ -62,7 +63,14 @@ public class ThirdPersonMovement : PlayerController
 
         base.Update();
 
-
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            aimLayer.weight += Time.deltaTime / aimDuration;
+        }
+        else
+        {
+            aimLayer.weight -= Time.deltaTime / aimDuration;
+        }
 
     }
 

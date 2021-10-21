@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -13,6 +14,14 @@ public class Player : MonoBehaviour
 
     public HealthBar healthBar;
     public SkillPointsBar skillBar;
+    //public GameObject inventories;
+    public Inventory inventory;
+
+    public int coreItems;
+
+    public int ammo;
+    public bool isFiring;
+    public Text ammoDisplay;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +40,33 @@ public class Player : MonoBehaviour
         {
             TakeDamage(20);
         }
+
+        ammoDisplay.text = ammo.ToString();
+        if (Input.GetMouseButtonDown(0) && !isFiring && ammo > 0)
+        {
+            isFiring = true;
+            ammo--;
+            isFiring = false;
+        }
+
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        GameObject g = hit.gameObject;
+        if (g.tag.Equals("Item"))
+        {
+            if (g.name.Contains("CoreItem"))
+            {
+                coreItems++;
+            }
+            //Inventory
+            else
+            {
+                inventory.AddItem(g.name);
+            }
+            Destroy(g);
+        }
     }
 
     void TakeDamage(int damage)
@@ -41,4 +77,36 @@ public class Player : MonoBehaviour
         currentSkill -= damage;
         skillBar.SetSkill(currentSkill);
     }
+
+    public void useAmmo()
+    {
+        ammo += 30;
+    }
+
+    public void useShield()
+    {
+
+    }
+
+    public void useHealthPotion()
+    {
+        currentHealth += 200;
+    }
+
+    public void useSkillPotion()
+    {
+        currentSkill += 75;
+    }
+
+    public void usePainKiller()
+    {
+
+    }
+
+    public void useDamageMultiplier()
+    {
+
+    }
+
+    
 }

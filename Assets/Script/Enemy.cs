@@ -6,10 +6,15 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
 
+    public Transform destination;
+    public List<GameObject> points;
+
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
-    public float health;
+    public int currentHealth;
+    public int maxHealth = 250;
+    public HealthBar healthBar;
 
     //Patrol
     public Vector3 walkPoint;
@@ -25,21 +30,33 @@ public class Enemy : MonoBehaviour
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
-    private void Awake()
+    Vector3 dest, start, end;
+
+    private void Start()
     {
-        player = GameObject.Find("Ken").transform;
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+
         agent = GetComponent<NavMeshAgent>();
+        dest = start = points[0].transform.position;
+        end = points[1].transform.position;
     }
+
+    //private void Awake()
+    //{
+    //    player = GameObject.Find("Ken").transform;
+    //    agent = GetComponent<NavMeshAgent>();
+    //}
 
     private void Update()
     {
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if(!playerInSightRange && !playerInAttackRange)
-        {
-            Patroling();
-        }
+        Patroling();
+        //if(!playerInSightRange && !playerInAttackRange)
+        //{
+        //}
 
         //if(playerInSightRange && !playerInAttackRange)
         //{
@@ -54,13 +71,20 @@ public class Enemy : MonoBehaviour
 
     private void Patroling()
     {
-        if (!walkPointSet)
+        //if (!walkPointSet)
+        //{
+        //    SearchWalkingPoint();
+        //}
+        //if (walkPointSet)
+        //{
+        //    agent.SetDestination(walkPoint);
+        //}
+
+        agent.SetDestination(dest);
+
+        if(agent.remainingDistance <= 0)
         {
-            SearchWalkingPoint();
-        }
-        if (walkPointSet)
-        {
-            agent.SetDestination(walkPoint);
+            dest = (dest == start) ? end : start;
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -72,18 +96,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void SearchWalkingPoint()
-    {
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
+    //private void SearchWalkingPoint()
+    //{
+    //    float randomZ = Random.Range(-walkPointRange, walkPointRange);
+    //    float randomX = Random.Range(-walkPointRange, walkPointRange);
 
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+    //    walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if(Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
-        {
-            walkPointSet = true;
-        }
-    }
+    //    if(Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+    //    {
+    //        walkPointSet = true;
+    //    }
+    //}
 
     //private void ChasePlayer()
     //{
@@ -117,9 +141,13 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
+        //currentHealth -= damage;
+        //healthBar.SetHealth(currentHealth);
 
-        if(health <= 0)
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+
+        if(currentHealth <= 0)
         {
             Invoke(nameof(DestroyEnemy), 0.5f);
         }
@@ -130,13 +158,13 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
-    }
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, attackRange);
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(transform.position, sightRange);
+    //}
 
 
 }

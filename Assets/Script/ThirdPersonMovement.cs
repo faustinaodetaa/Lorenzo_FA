@@ -16,6 +16,7 @@ public class ThirdPersonMovement : PlayerController
     public Cinemachine.AxisState xAxis;
     public Cinemachine.AxisState yAxis;
     int isAimingParam = Animator.StringToHash("isAiming");
+    public static bool ShootingMode = false;
 
     protected override void Start()
     {
@@ -44,7 +45,13 @@ public class ThirdPersonMovement : PlayerController
         bool isAiming = Input.GetMouseButton(1);
         animator.SetBool(isAimingParam, isAiming);
 
-        if (direction.magnitude >= 0.1f)
+        if (ShootingMode)
+        {
+            var mouseX = Input.GetAxis("Mouse X");
+            transform.Rotate(new Vector3(0, mouseX, 0));
+        }
+
+            if (direction.magnitude >= 0.1f)
         {
 
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
@@ -63,13 +70,54 @@ public class ThirdPersonMovement : PlayerController
 
         base.Update();
 
+        //if (Input.GetKeyDown(KeyCode.C))
+        //    if (Input.GetMouseButton(0))
+
+        //    {
+        //        aimLayer.weight += Time.deltaTime / aimDuration;
+        //}
+        //else
+        //{
+        //    aimLayer.weight -= Time.deltaTime / aimDuration;
+        //}
+
         if (Input.GetKeyDown(KeyCode.C))
         {
-            aimLayer.weight += Time.deltaTime / aimDuration;
+            if (ShootingMode)
+            {
+                //mainCam.SetActive(true);
+                //shootingCam.SetActive(false);
+                ShootingMode = false;
+                StartCoroutine(Idle());
+            }
+            else
+            {
+                //mainCam.SetActive(false);
+                //shootingCam.SetActive(true);
+                ShootingMode = true;
+                StartCoroutine(Shoot());
+            }
         }
-        else
+
+        IEnumerator Shoot()
         {
-            aimLayer.weight -= Time.deltaTime / aimDuration;
+            while (aimLayer.weight < 1)
+            {
+                yield return null;
+                aimLayer.weight += Time.deltaTime / aimDuration;
+            }
+            yield return null;
+        }
+
+        IEnumerator Idle()
+        {
+            while (aimLayer.weight > 0)
+            {
+                yield return null;
+                aimLayer.weight -= Time.deltaTime / aimDuration;
+            }
+            yield return null;
+
         }
 
     }
@@ -79,19 +127,22 @@ public class ThirdPersonMovement : PlayerController
     {
         cam.transform.position = transform.position + Vector3.back * 5 + Vector3.up;
 
+        if (ShootingMode)
+        {
+            if (Input.GetButtonDown("Fire1"))
+            {
+                weapon.StartFiring();
+            }
+            if (weapon.isFiring)
+            {
+                weapon.UpdateFiring(Time.deltaTime);
+            }
+            weapon.UpdateBullets(Time.deltaTime);
+            if (Input.GetButtonUp("Fire1"))
+            {
+                weapon.StopFiring();
+            }
 
-        if (Input.GetButtonDown("Fire1"))
-        {
-            weapon.StartFiring();
-        }
-        if (weapon.isFiring)
-        {
-            weapon.UpdateFiring(Time.deltaTime);
-        }
-        weapon.UpdateBullets(Time.deltaTime);
-        if (Input.GetButtonUp("Fire1"))
-        {
-            weapon.StopFiring();
         }
     
     }

@@ -11,6 +11,8 @@ TagManager:
   - Ammo
   - PainKiller
   - Shield
+  - Item
+  - Enemy
   layers:
   - Default
   - TransparentFX

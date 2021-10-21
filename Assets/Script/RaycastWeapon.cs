@@ -22,6 +22,8 @@ public class RaycastWeapon : MonoBehaviour
     public TrailRenderer tracerEffect;
     public Transform raycastOrigin;
     public Transform raycastDestination;
+    Enemy enemy;
+    Player player;
     
 
 
@@ -95,6 +97,9 @@ public class RaycastWeapon : MonoBehaviour
         float distance = direction.magnitude;
         ray.origin = start;
         ray.direction = end - start;
+
+        int damage = 10;
+
         if (Physics.Raycast(ray, out hitInfo, distance))
         {
             //Debug.DrawLine(ray.origin, hitInfo.point, Color.red, 1.0f);
@@ -104,6 +109,14 @@ public class RaycastWeapon : MonoBehaviour
 
             bullet.tracer.transform.position = hitInfo.point;
             bullet.time = maxLifetime;
+            Debug.Log(hitInfo.collider.name);
+            if (hitInfo.collider.gameObject.tag.Equals("Enemy"))
+            {
+                Debug.Log("enemy dmg");
+                enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
+                enemy.TakeDamage(damage);
+                //player.currentSkill += 2;
+            }
         }
         else
         {

@@ -13,6 +13,8 @@ public class DialogueManager : MonoBehaviour
 
     private Queue<string> sentences;
 
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,8 @@ public class DialogueManager : MonoBehaviour
     {
         //Debug.Log("Starting convo with " + dialogue.name);
         animator.SetBool("IsOpen", true);
+        
+        //dialogueUI.SetActive(true);
 
         nameText.text = dialogue.name;
 
@@ -65,6 +69,10 @@ public class DialogueManager : MonoBehaviour
     {
         //Debug.Log("End of convo");
         animator.SetBool("IsOpen", false);
+        //dialogueCamera.SetActive(false);
+        //mainCamera.SetActive(true);
+        //playerHUD.SetActive(true);
+
     }
 
    

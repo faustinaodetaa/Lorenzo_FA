@@ -18,14 +18,26 @@ public class ThirdPersonMovement : PlayerController
     int isAimingParam = Animator.StringToHash("isAiming");
     public static bool ShootingMode = false;
 
+    public GameObject playerHUD;
+    //public GameObject dialogueUI;
+
+    public GameObject dialogueCamera;
+    public GameObject mainCamera;
+
+    DialogueTrigger dt;
+
     protected override void Start()
     {
         controller = GetComponent<CharacterController>();
         velocity.y = 0;
         animator = GetComponent<Animator>();
         weapon = GetComponentInChildren < RaycastWeapon>();
+        //dt.TriggerDialogue();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        //playerHUD.SetActive(false);
+        //dialogueCamera.SetActive(true);
+        //mainCamera.SetActive(false);
     }
 
     // Update is called once per frame

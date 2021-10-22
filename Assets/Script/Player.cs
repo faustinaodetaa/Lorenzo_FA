@@ -18,10 +18,12 @@ public class Player : MonoBehaviour
     public Inventory inventory;
 
     public int coreItems;
+    public Text coreItemDisplay;
 
     public int ammo;
     public bool isFiring;
     public Text ammoDisplay;
+
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +51,9 @@ public class Player : MonoBehaviour
             isFiring = false;
         }
 
+        coreItemDisplay.text = coreItems.ToString();
+       
+
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
@@ -58,9 +63,9 @@ public class Player : MonoBehaviour
         {
             if (g.name.Contains("CoreItem"))
             {
+                Debug.Log("core item");
                 coreItems++;
             }
-            //Inventory
             else
             {
                 inventory.AddItem(g.name);

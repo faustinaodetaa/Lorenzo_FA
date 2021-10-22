@@ -27,41 +27,38 @@ public class Inventory : MonoBehaviour
         public Text qty;
     }
 
-    public List<Item> itemsAvailable; //ada item apa aja
+    public List<Item> itemList; 
     public List<InventorySlotDisplay> inventorySlotsDisplay;
     public Player player;
 
-    private List<InventorySlot> slots; //isi slot
+    private List<InventorySlot> slotList; 
     private int maxSlot = 6;
 
     public void AddItem(string itemName)
     {
         Item item = new Item();
-        foreach (Item i in itemsAvailable)
+        foreach (Item i in itemList)
         {
             if (itemName.Contains(i.name))
             {
                 item = i;
-                Debug.Log("found " + itemName);
+                Debug.Log(itemName);
                 break;
             }
         }
 
-        //insert
         if (item != null)
         {
             for (int i = 0; i < maxSlot; i++)
             {
-                if (slots[i].item == null)
+                if (slotList[i].item == null)
                 {
-                    slots[i].item = item;
-                    Debug.Log("masuk");
+                    slotList[i].item = item;
                 }
 
-                if (slots[i].item == item)
+                if (slotList[i].item == item)
                 {
-                    slots[i].qty++;
-                    Debug.Log("tambah");
+                    slotList[i].qty++;
                     break;
                 }
             }
@@ -71,7 +68,7 @@ public class Inventory : MonoBehaviour
     public void UseItem(int itemSlot)
     {
         itemSlot--;
-        InventorySlot use = slots[itemSlot];
+        InventorySlot use = slotList[itemSlot];
         if (use.item != null)
         {
             if (use.item.name.Equals("ItemAmmo"))
@@ -107,13 +104,13 @@ public class Inventory : MonoBehaviour
 
     private void removeItem(int itemSlot)
     {
-        slots.RemoveAt(itemSlot);
+        slotList.RemoveAt(itemSlot);
 
-        InventorySlot s = new InventorySlot();
-        s.item = null;
-        s.qty = 0;
+        InventorySlot inventories = new InventorySlot();
+        inventories.item = null;
+        inventories.qty = 0;
 
-        slots.Add(s);
+        slotList.Add(inventories);
 
         updateInventory();
     }
@@ -123,7 +120,7 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        slots = new List<InventorySlot>(maxSlot + 1);
+        slotList = new List<InventorySlot>(maxSlot + 1);
         initSlots();
     }
 
@@ -131,11 +128,11 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < maxSlot; i++)
         {
-            InventorySlot s = new InventorySlot();
-            s.item = null;
-            s.qty = 0;
+            InventorySlot inventories = new InventorySlot();
+            inventories.item = null;
+            inventories.qty = 0;
 
-            slots.Add(s);
+            slotList.Add(inventories);
         }
     }
     void updateInventory()
@@ -144,23 +141,15 @@ public class Inventory : MonoBehaviour
         {
             inventorySlotsDisplay[i].img.sprite = null;
             inventorySlotsDisplay[i].qty.enabled = false;
-
-            //var color = inventorySlotsDisplay[i].img.color;
-            //color.a = 0f;
-            //inventorySlotsDisplay[i].img.color = color;
         }
 
         for (int i = 0; i < 6; i++)
         {
-            if (slots[i].item != null)
+            if (slotList[i].item != null)
             {
-                inventorySlotsDisplay[i].img.sprite = slots[i].item.sprite;
-
-                //var color = inventorySlotsDisplay[i].img.color;
-                //color.a = 1f;
-                //inventorySlotsDisplay[i].img.color = color;
+                inventorySlotsDisplay[i].img.sprite = slotList[i].item.sprite;
                 inventorySlotsDisplay[i].qty.enabled = true;
-                inventorySlotsDisplay[i].qty.text = slots[i].qty.ToString();
+                inventorySlotsDisplay[i].qty.text = slotList[i].qty.ToString();
                 Debug.Log("item ke " + i);
             }
         }

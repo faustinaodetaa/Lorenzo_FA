@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     public int currentHealth;
     public int maxHealth = 250;
     public HealthBar healthBar;
+    public int damage;
 
     //Patrol
     public Vector3 walkPoint;
@@ -29,6 +30,8 @@ public class Enemy : MonoBehaviour
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
+
+    public Player ken;
 
     Vector3 dest, start, end;
 
@@ -79,7 +82,7 @@ public class Enemy : MonoBehaviour
         //{
         //    agent.SetDestination(walkPoint);
         //}
-
+        //Debug.Log(name);
         agent.SetDestination(dest);
 
         if(agent.remainingDistance <= 0)
@@ -128,15 +131,19 @@ public class Enemy : MonoBehaviour
             rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
             rb.AddForce(transform.up * 8f, ForceMode.Impulse);
 
-
+            SoundManager.PlaySound("gunshot");
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            ken.bloodSplatter.SetActive(true);
+            ken.TakeDamage(damage);
         }
+        //ken.bloodSplatter.SetActive(false);
     }
 
     private void ResetAttack()
     {
         alreadyAttacked = false;
+        ken.bloodSplatter.SetActive(false);
     }
 
     public void TakeDamage(int damage)
@@ -157,14 +164,6 @@ public class Enemy : MonoBehaviour
     {
         Destroy(gameObject);
     }
-
-    //private void OnDrawGizmosSelected()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawWireSphere(transform.position, attackRange);
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(transform.position, sightRange);
-    //}
 
 
 }

@@ -13,7 +13,14 @@ public class DialogueManager : MonoBehaviour
 
     private Queue<string> sentences;
 
-    
+    public GameObject playerHUD;
+    //public GameObject dialogueUI;
+
+    public GameObject dialogueCamera;
+    public GameObject mainCamera;
+    public GameObject shoulderCamera;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -25,8 +32,14 @@ public class DialogueManager : MonoBehaviour
     {
         //Debug.Log("Starting convo with " + dialogue.name);
         animator.SetBool("IsOpen", true);
-        
+
         //dialogueUI.SetActive(true);
+        Debug.Log("dialogue");
+        playerHUD.SetActive(false);
+        mainCamera.SetActive(false);
+        shoulderCamera.SetActive(false);
+        dialogueCamera.SetActive(true);
+        
 
         nameText.text = dialogue.name;
 
@@ -69,9 +82,11 @@ public class DialogueManager : MonoBehaviour
     {
         //Debug.Log("End of convo");
         animator.SetBool("IsOpen", false);
-        //dialogueCamera.SetActive(false);
-        //mainCamera.SetActive(true);
-        //playerHUD.SetActive(true);
+        dialogueCamera.SetActive(false);
+        mainCamera.SetActive(true);
+        playerHUD.SetActive(true);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
     }
 

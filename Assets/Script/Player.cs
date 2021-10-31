@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
     public int ammo;
     public bool isFiring;
     public Text ammoDisplay;
+    public GameObject deathMenu;
+    public GameObject bloodSplatter;
 
 
     // Start is called before the first frame update
@@ -33,6 +35,8 @@ public class Player : MonoBehaviour
 
         currentSkill = maxSkill;
         skillBar.SetMaxSkill(maxSkill);
+        deathMenu.SetActive(false);
+        bloodSplatter.SetActive(false);
     }
 
     // Update is called once per frame
@@ -53,6 +57,11 @@ public class Player : MonoBehaviour
 
         coreItemDisplay.text = coreItems.ToString();
        
+        if(currentHealth == 0)
+        {
+            //Debug.Log("mati");
+            deathMenu.SetActive(true);
+        }
 
     }
 
@@ -74,13 +83,23 @@ public class Player : MonoBehaviour
         }
     }
 
-    void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
+        //bloodSplatter.SetActive(true);
 
-        currentSkill -= damage;
-        skillBar.SetSkill(currentSkill);
+        if(currentHealth <= 0)
+        {
+            Debug.Log("is ded");
+            deathMenu.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0f;
+        }
+
+        //currentSkill -= damage;
+        //skillBar.SetSkill(currentSkill);
     }
 
     public void useAmmo()

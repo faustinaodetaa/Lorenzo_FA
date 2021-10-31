@@ -24,7 +24,7 @@ public class RaycastWeapon : MonoBehaviour
     public Transform raycastDestination;
     Enemy enemy;
     Player player;
-    
+    public GameObject magazine;
 
 
     Ray ray;

@@ -23,6 +23,9 @@ public class ThirdPersonMovement : PlayerController
 
     public GameObject dialogueCamera;
     public GameObject mainCamera;
+    public GameObject shoulderCamera;
+
+    public static bool shoulderMode = false;
 
     DialogueTrigger dt;
 
@@ -33,9 +36,10 @@ public class ThirdPersonMovement : PlayerController
         animator = GetComponent<Animator>();
         weapon = GetComponentInChildren < RaycastWeapon>();
         //dt.TriggerDialogue();
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        //playerHUD.SetActive(false);
+
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        playerHUD.SetActive(false);
         //dialogueCamera.SetActive(true);
         //mainCamera.SetActive(false);
     }
@@ -57,11 +61,11 @@ public class ThirdPersonMovement : PlayerController
         bool isAiming = Input.GetMouseButton(1);
         animator.SetBool(isAimingParam, isAiming);
 
-        if (ShootingMode)
-        {
-            var mouseX = Input.GetAxis("Mouse X");
-            transform.Rotate(new Vector3(0, mouseX, 0));
-        }
+        //if (ShootingMode)
+        //{
+        //    var mouseX = Input.GetAxis("Mouse X");
+        //    transform.Rotate(new Vector3(0, mouseX, 0));
+        //}
 
             if (direction.magnitude >= 0.1f)
         {
@@ -107,6 +111,8 @@ public class ThirdPersonMovement : PlayerController
                 //mainCam.SetActive(false);
                 //shootingCam.SetActive(true);
                 ShootingMode = true;
+                var mouseX = Input.GetAxis("Mouse X");
+                transform.Rotate(new Vector3(0, mouseX, 0));
                 StartCoroutine(Shoot());
             }
         }
@@ -132,6 +138,27 @@ public class ThirdPersonMovement : PlayerController
 
         }
 
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            //Debug.Log("tab");
+            if (shoulderMode)
+            {
+                mainCamera.SetActive(true);
+                shoulderCamera.SetActive(false);
+                shoulderMode = false;
+                //Debug.Log("Out shoulder mode");
+            }
+            else
+            {
+                mainCamera.SetActive(false);
+                shoulderCamera.SetActive(true);
+                shoulderMode = true;
+                //Debug.Log("Shoulder mode");
+                
+            }
+            
+        }
+
     }
 
 
@@ -144,6 +171,7 @@ public class ThirdPersonMovement : PlayerController
             if (Input.GetButtonDown("Fire1"))
             {
                 weapon.StartFiring();
+                SoundManager.PlaySound("gunshot");
             }
             if (weapon.isFiring)
             {

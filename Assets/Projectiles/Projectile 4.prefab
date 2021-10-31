@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5261908539032414062}
   - component: {fileID: 5261908539032414063}
   - component: {fileID: 5261908539032414032}
-  - component: {fileID: 5261908539032414033}
   - component: {fileID: 1092911032284006343}
   m_Layer: 14
   m_Name: Projectile 4
@@ -59,10 +58,11 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 898bdef38d884a14bb1aaf53e65ccd62, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,6 +83,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!135 &5261908539032414063
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -112,78 +113,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &5261908539032414033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5261908539032414034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce7d0e97d58591945b59aba8af091cbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activated: 1
-  rb: {fileID: 5261908539032414032}
-  explosion: {fileID: 2291373124182283588, guid: d64944191d713a24aaf4143b0bee54f2,
-    type: 3}
-  whatIsEnemies:
-    serializedVersion: 2
-    m_Bits: 2048
-  bounciness: 0.663
-  useGravity: 1
-  explosionDamage: 150
-  explosionRange: 5
-  maxCollisions: 1
-  maxLifetime: 2
-  explodeOnTouch: 1
-  secondBullet: {fileID: 0}
-  sb_amount: 0
-  sb_forwardForce: 0
-  sb_upwardForce: 0
-  sb_randomForce: 20
-  scaleGrowingSpeed: 0
-  damageGrowingSpeed: 0
-  maxScale: 0
-  maxDamage: 0
-  stickToObjects: 0
-  checkForEnemies: 0
-  checkRange: 0
-  objectToSpawn: {fileID: 0}
-  timeBetweenSpawns: 0
-  preferredSpawnPoints: []
-  maxSpawnAmount: 0
-  nameOfObjectToTp: 
-  tpOnFirstCollision: 0
-  tpOnEveryCollision: 0
-  tpOnExplosion: 0
-  switchPlaces: 0
-  timeBeforeVanish: 0
-  timeBetweenVanishAndAppear: 0
-  dontAppearAgain: 0
-  canStillExplodeWhenVanished: 0
-  canTravelThroughtWallsWhileVanished: 0
-  repeat: 0
-  useSmoothAutoAim: 0
-  useInsaneAutoAim: 0
-  autoAimIntensity: 0
-  autoAimDetectRange: 0
-  autoAimStopRange: 0
-  timeBeforeDropping: 0
-  waitMidAir: 0
-  dropForce: 0
-  explodeDirectlyAfterDrop: 1
-  smokeEffect: {fileID: 0}
-  useCustomGravity: 0
-  gravityDirection: {x: 0, y: 0, z: 0}
-  gravityStrength: 0
-  playerObjectName: 
-  dashForce: 0
-  dashDelay: 0.2
-  chargeTime: 0
-  chargedVelocityMultiplier: 0
-  alreadyExploded: 0
 --- !u!96 &1092911032284006343
 TrailRenderer:
   serializedVersion: 2
@@ -200,6 +129,7 @@ TrailRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

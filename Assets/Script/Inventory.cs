@@ -42,7 +42,7 @@ public class Inventory : MonoBehaviour
             if (itemName.Contains(i.name))
             {
                 item = i;
-                Debug.Log(itemName);
+                Debug.Log("tes" + itemName + i.name);
                 break;
             }
         }

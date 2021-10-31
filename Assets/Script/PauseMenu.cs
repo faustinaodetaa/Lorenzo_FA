@@ -32,16 +32,18 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
+        AudioListener.volume = 1;
         GameIsPaused = false;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        Debug.Log("tes resume");
+        //Debug.Log("tes resume");
     }
 
     void Pause()
     {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
+        AudioListener.volume = 0;
         GameIsPaused = true;
         //Debug.Log("tes pause");
     }

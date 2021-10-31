@@ -5,43 +5,72 @@ using UnityEngine;
 public class Cannon : MonoBehaviour
 {
 
-    private Animator animator;
-    private bool cannonIsLoaded = false;
-    private Transform cannonBallSpawn = null;
-    public GameObject CannonBall;
-    //private ParticleSystem PS_Smoke;
-    public float Power = 12.0f;
+    //private Animator animator;
+    //private bool cannonIsLoaded = false;
+    //private Transform cannonBallSpawn = null;
+    //public GameObject CannonBall;
+    ////private ParticleSystem PS_Smoke;
+    //public float Power = 12.0f;
 
 
-    // Start is called before the first frame update
+    //// Start is called before the first frame update
+    //void Start()
+    //{
+    //    animator = GetComponent<Animator>();
+    //    cannonBallSpawn = transform.Find("CannonBallSpawn");
+    //}
+
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //    //ShootCannonBall();
+    //}
+
+    //private void ShootCannonBall()
+    //{
+    //    GameObject cannonBall = Instantiate(CannonBall, cannonBallSpawn.position, Quaternion.identity);
+    //    Rigidbody rb = cannonBall.AddComponent<Rigidbody>();
+
+    //    rb.velocity = Power * cannonBallSpawn.forward;
+
+    //    StartCoroutine(RemoveCannonBall(rb, 3.0f));
+
+    //    animator.SetTrigger("tr_shoot");
+    //}
+
+    //IEnumerator RemoveCannonBall(Rigidbody rb, float delay)
+    //{
+    //    yield return new WaitForSeconds(delay);
+
+    //    Destroy(rb);
+    //}
+
+
+    public GameObject cannonBullet;
+    public Transform cannonShootSpot;
+    private float startTime, timeElapsed;
+
     void Start()
     {
-        animator = GetComponent<Animator>();
-        cannonBallSpawn = transform.Find("CannonBallSpawn");
+        startTime = Time.time;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //ShootCannonBall();
+        timeElapsed = Time.time - startTime;
+        if (timeElapsed >= 3)
+        {
+            shootCannon();
+            startTime = Time.time;
+        }
     }
 
-    private void ShootCannonBall()
+    void shootCannon()
     {
-        GameObject cannonBall = Instantiate(CannonBall, cannonBallSpawn.position, Quaternion.identity);
-        Rigidbody rb = cannonBall.AddComponent<Rigidbody>();
-
-        rb.velocity = Power * cannonBallSpawn.forward;
-
-        StartCoroutine(RemoveCannonBall(rb, 3.0f));
-
-        animator.SetTrigger("tr_shoot");
+        GameObject o = Instantiate(cannonBullet, cannonShootSpot.position, Quaternion.identity);
+        o.transform.rotation = cannonShootSpot.rotation;
+        Rigidbody rb = o.GetComponent<Rigidbody>();
+        rb.AddForce(o.transform.forward * 1000);
     }
 
-    IEnumerator RemoveCannonBall(Rigidbody rb, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        Destroy(rb);
-    }
 }

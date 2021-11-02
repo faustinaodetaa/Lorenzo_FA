@@ -23,8 +23,10 @@ public class RaycastWeapon : MonoBehaviour
     public Transform raycastOrigin;
     public Transform raycastDestination;
     Enemy enemy;
-    Player player;
+    public Player player;
     public GameObject magazine;
+    public int damage;
+    public SkillPointsBar skillBar;
 
 
     Ray ray;
@@ -98,7 +100,7 @@ public class RaycastWeapon : MonoBehaviour
         ray.origin = start;
         ray.direction = end - start;
 
-        int damage = 10;
+        //int damage = 10;
 
         if (Physics.Raycast(ray, out hitInfo, distance))
         {
@@ -115,7 +117,8 @@ public class RaycastWeapon : MonoBehaviour
                 Debug.Log("enemy dmg");
                 enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
                 enemy.TakeDamage(damage);
-                //player.currentSkill += 2;
+                player.currentSkill += 2;
+                skillBar.SetSkill(player.currentSkill);
             }
         }
         else

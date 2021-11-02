@@ -413,6 +413,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2692337237694966459}
   - component: {fileID: 2692337235702060350}
+  - component: {fileID: 6808970434370023419}
+  - component: {fileID: -4865316974198308854}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Untagged
@@ -461,6 +463,73 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!195 &6808970434370023419
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2692337237694805659}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &-4865316974198308854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2692337237694805659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc01fdb55139244cb263bf79592ae02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destination: {fileID: 0}
+  points: []
+  agent: {fileID: 6808970434370023419}
+  player: {fileID: 0}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 128
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 8
+  currentHealth: 0
+  maxHealth: 250
+  healthBar: {fileID: 1522481990889139584, guid: f9bb71c12fbe48e42bdf481f047b4e66, type: 3}
+  damage: 20
+  walkPoint: {x: 0, y: 0, z: 0}
+  walkPointRange: 0
+  timeBetweenAttacks: 0
+  sightRange: 0
+  attackRange: 0
+  playerInSightRange: 0
+  playerInAttackRange: 0
+  ken: {fileID: 5396987787813652765, guid: d9aec6402fb636143bb26c65dc617461, type: 3}
+  coreItem: {fileID: 7241455216954182561, guid: 9325f5fef4bfc564d9aef09eefe5af93, type: 3}
+  isFiring: 0
+  fireRate: 25
+  bulletSpeed: 100
+  bulletDrop: 0
+  muzzleFlash: []
+  hitEffect: {fileID: 4331931961140162267, guid: d2e4dde76b3ab1b42aa42a90d0ca6901, type: 3}
+  tracerEffect: {fileID: 181032771214138736, guid: 82181f5599fa96545ac87dbe5f0ba441, type: 3}
+  raycastOrigin: {fileID: 1767431871016992259, guid: f2d53b0776f45824189fb203b997bd1b, type: 3}
+  raycastDestination: {fileID: 8151119585889949107, guid: a89d115592a218945a0cf32bab60bb7a, type: 3}
+  bulletDamage: 20
 --- !u!1 &2692337237694805661
 GameObject:
   m_ObjectHideFlags: 0

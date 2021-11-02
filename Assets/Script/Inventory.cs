@@ -93,7 +93,7 @@ public class Inventory : MonoBehaviour
             }
             else if (use.item.name.Equals("ItemDamageMultiplier"))
             {
-                player.useDamageMultiplier();
+                StartCoroutine(player.useDamageMultiplier());
             }
             use.qty--;
             inventorySlotsDisplay[itemSlot].qty.text = use.qty.ToString();
@@ -150,7 +150,7 @@ public class Inventory : MonoBehaviour
                 inventorySlotsDisplay[i].img.sprite = slotList[i].item.sprite;
                 inventorySlotsDisplay[i].qty.enabled = true;
                 inventorySlotsDisplay[i].qty.text = slotList[i].qty.ToString();
-                Debug.Log("item ke " + i);
+                //Debug.Log("item ke " + i);
             }
         }
     }

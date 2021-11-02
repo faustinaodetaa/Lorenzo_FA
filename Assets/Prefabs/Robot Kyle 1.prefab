@@ -451,6 +451,7 @@ GameObject:
   - component: {fileID: 6154663111354252930}
   - component: {fileID: 6154663111354252943}
   - component: {fileID: 6154663111354252941}
+  - component: {fileID: 369564741930578159}
   m_Layer: 0
   m_Name: Robot Kyle 1
   m_TagString: Enemy
@@ -546,6 +547,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc01fdb55139244cb263bf79592ae02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destination: {fileID: 0}
+  points: []
   agent: {fileID: 6154663111354252941}
   player: {fileID: 0}
   whatIsGround:
@@ -557,14 +560,26 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 250
   healthBar: {fileID: 3369719411453797345}
+  damage: 15
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 20
   timeBetweenAttacks: 0.425
-  projectile: {fileID: 5261908539032414034, guid: 71d257e512cd48f4592b1d78950d0a10, type: 3}
   sightRange: 20
   attackRange: 12
   playerInSightRange: 0
   playerInAttackRange: 0
+  ken: {fileID: 0}
+  coreItem: {fileID: 0}
+  isFiring: 0
+  fireRate: 25
+  bulletSpeed: 100
+  bulletDrop: 0
+  muzzleFlash: []
+  hitEffect: {fileID: 4331931961140162267, guid: d2e4dde76b3ab1b42aa42a90d0ca6901, type: 3}
+  tracerEffect: {fileID: 181032771214138736, guid: 82181f5599fa96545ac87dbe5f0ba441, type: 3}
+  raycastOrigin: {fileID: 1767431871016992259, guid: f2d53b0776f45824189fb203b997bd1b, type: 3}
+  raycastDestination: {fileID: 8151119585889949107, guid: a89d115592a218945a0cf32bab60bb7a, type: 3}
+  bulletDamage: 15
 --- !u!195 &6154663111354252941
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -587,6 +602,25 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &369564741930578159
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2758503612278232576}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
+  m_Controller: {fileID: 9100000, guid: d76f81e0bd79d064fad8013214da2fd6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2940294632349694524
 GameObject:
   m_ObjectHideFlags: 0

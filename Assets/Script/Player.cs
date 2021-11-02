@@ -21,10 +21,18 @@ public class Player : MonoBehaviour
     public Text coreItemDisplay;
 
     public int ammo;
+    public int spareAmmo;
     public bool isFiring;
-    public Text ammoDisplay;
+    public Text currentAmmoDisplay;
+    public Text spareAmmoDisplay;
     public GameObject deathMenu;
     public GameObject bloodSplatter;
+    RaycastWeapon weapon;
+    public Text messageDisplay;
+    public Text currentWeaponDisplay;
+    public string message;
+    public string currentWeapon;
+    public GameObject messageUI;
 
 
     // Start is called before the first frame update
@@ -37,24 +45,35 @@ public class Player : MonoBehaviour
         skillBar.SetMaxSkill(maxSkill);
         deathMenu.SetActive(false);
         bloodSplatter.SetActive(false);
+        weapon = GetComponentInChildren<RaycastWeapon>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            TakeDamage(20);
-        }
+        //if (Input.GetKeyDown(KeyCode.Backspace))
+        //{
+        //    TakeDamage(20);
+        //}
 
-        ammoDisplay.text = ammo.ToString();
+        currentAmmoDisplay.text = ammo.ToString();
         if (Input.GetMouseButtonDown(0) && !isFiring && ammo > 0)
         {
             isFiring = true;
             ammo--;
             isFiring = false;
+            
         }
-
+        if(ammo <= 0)
+        {
+            message = "Reloading...";
+            ammo += 30;
+            spareAmmo -= 30;
+            messageDisplay.text = message;
+            Invoke(nameof(displayMessage), 5);
+        }
+        spareAmmoDisplay.text = spareAmmo.ToString();
+        currentWeaponDisplay.text = currentWeapon.ToString();
         coreItemDisplay.text = coreItems.ToString();
        
         if(currentHealth == 0)
@@ -63,6 +82,31 @@ public class Player : MonoBehaviour
             deathMenu.SetActive(true);
         }
 
+        if(Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            inventory.UseItem(1);
+        }else if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            inventory.UseItem(2);
+        }else if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            inventory.UseItem(3);
+        }else if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            inventory.UseItem(4);
+        }else if (Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            inventory.UseItem(5);
+        }else if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            inventory.UseItem(6);
+        }
+
+    }
+
+    void displayMessage()
+    {
+        messageUI.SetActive(true);
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
@@ -86,6 +130,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        Debug.Log("get " + damage);
         healthBar.SetHealth(currentHealth);
         //bloodSplatter.SetActive(true);
 
@@ -115,11 +160,23 @@ public class Player : MonoBehaviour
     public void useHealthPotion()
     {
         currentHealth += 200;
+        if(currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
+        healthBar.SetHealth(currentHealth);
     }
 
     public void useSkillPotion()
     {
         currentSkill += 75;
+        if(currentSkill > maxSkill)
+        {
+            currentSkill = maxSkill;
+        }
+        Debug.Log("nambah skill");
+        skillBar.SetSkill(currentSkill);
     }
 
     public void usePainKiller()
@@ -127,9 +184,11 @@ public class Player : MonoBehaviour
 
     }
 
-    public void useDamageMultiplier()
+    public IEnumerator useDamageMultiplier()
     {
-
+        weapon.damage *= 2;
+        yield return new WaitForSeconds(5f);
+        weapon.damage /= 2;
     }
 
     

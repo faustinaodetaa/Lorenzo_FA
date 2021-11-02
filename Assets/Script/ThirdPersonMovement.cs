@@ -24,8 +24,11 @@ public class ThirdPersonMovement : PlayerController
     public GameObject dialogueCamera;
     public GameObject mainCamera;
     public GameObject shoulderCamera;
+    public GameObject planeCamera;
 
     public static bool shoulderMode = false;
+
+    public GameObject victoryMenu;
 
     DialogueTrigger dt;
 
@@ -72,7 +75,13 @@ public class ThirdPersonMovement : PlayerController
 
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            if (!ShootingMode)
+            {
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                //var mouseX = Input.GetAxis("Mouse X");
+                //transform.Rotate(new Vector3(0, mouseX, 0));
+            }
+
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
@@ -85,17 +94,6 @@ public class ThirdPersonMovement : PlayerController
         }
 
         base.Update();
-
-        //if (Input.GetKeyDown(KeyCode.C))
-        //    if (Input.GetMouseButton(0))
-
-        //    {
-        //        aimLayer.weight += Time.deltaTime / aimDuration;
-        //}
-        //else
-        //{
-        //    aimLayer.weight -= Time.deltaTime / aimDuration;
-        //}
 
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -111,8 +109,8 @@ public class ThirdPersonMovement : PlayerController
                 //mainCam.SetActive(false);
                 //shootingCam.SetActive(true);
                 ShootingMode = true;
-                var mouseX = Input.GetAxis("Mouse X");
-                transform.Rotate(new Vector3(0, mouseX, 0));
+                //var mouseX = Input.GetAxis("Mouse X");
+                //transform.Rotate(new Vector3(0, mouseX, 0));
                 StartCoroutine(Shoot());
             }
         }
@@ -157,6 +155,13 @@ public class ThirdPersonMovement : PlayerController
                 
             }
             
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            mainCamera.SetActive(false);
+            planeCamera.SetActive(true);
+            victoryMenu.SetActive(true);
         }
 
     }

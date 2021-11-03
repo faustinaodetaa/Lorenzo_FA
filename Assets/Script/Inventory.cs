@@ -77,7 +77,7 @@ public class Inventory : MonoBehaviour
             }
             else if (use.item.name.Equals("ItemShield"))
             {
-                player.useShield();
+                StartCoroutine(player.useShield());
             }
             else if (use.item.name.Equals("ItemHealthPotion"))
             {
@@ -89,7 +89,7 @@ public class Inventory : MonoBehaviour
             }
             else if (use.item.name.Equals("ItemPainKiller"))
             {
-                player.usePainKiller();
+                StartCoroutine(player.usePainKiller());
             }
             else if (use.item.name.Equals("ItemDamageMultiplier"))
             {

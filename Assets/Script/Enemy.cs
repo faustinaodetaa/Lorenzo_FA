@@ -6,9 +6,9 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
 
-    public Transform destination;
-    public List<GameObject> points;
-
+    /*
+     * Enemy Attribute
+     */
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
@@ -16,26 +16,19 @@ public class Enemy : MonoBehaviour
     public int maxHealth = 250;
     public HealthBar healthBar;
     public int damage;
+    public int spawnDelay;
 
-
-    //Patrol
-    public Vector3 walkPoint;
-    bool walkPointSet;
-    public float walkPointRange;
 
     //Attack
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     //public GameObject projectile;
-
-    //States
-    public float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange;
+    
 
     public Player ken;
     public GameObject coreItem;
 
-    Vector3 dest, start, end;
+    
 
     Animator animator;
 
@@ -44,98 +37,93 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        initEnemyPatrolAttackChase();
+        ken = FindObjectOfType<Player>();
+        player = FindObjectOfType<Player>().transform;
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
-
+        
         agent = GetComponent<NavMeshAgent>();
-        dest = start = points[0].transform.position;
-        end = points[1].transform.position;
         animator = GetComponent<Animator>();
         //weapon = GetComponentInChildren<RaycastWeapon>();
     }
 
-    //private void Awake()
-    //{
-    //    player = GameObject.Find("Ken").transform;
-    //    agent = GetComponent<NavMeshAgent>();
-    //}
-
     private void Update()
+    {
+        enemyRoutines();
+    }
+
+    #region EnemyPatrol, EnemyAttack, EnemyChase
+
+    public float sightRange, attackRange;
+    public bool playerInSightRange, playerInAttackRange, canChasePlayer;
+    public int currentPatrolIndex;
+    public int patrolIndex;
+    public bool inPosition, attackEnemyFirstTime;
+    public Transform patrolArea;
+    public List<Transform> patrolPoints;
+
+    private void initEnemyPatrolAttackChase()
+    {
+        currentPatrolIndex = 0;
+        inPosition = attackEnemyFirstTime = false;
+    }
+
+    private void enemyRoutines()
     {
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        Patroling();
-        //if(!playerInSightRange && !playerInAttackRange)
-        //{
-        //}
+        if (inPosition && !playerInSightRange && !playerInAttackRange)
+        {
+            Patroling();
+        }
 
-        //if(playerInSightRange && !playerInAttackRange)
-        //{
-        //    ChasePlayer();
-        //}
+        if (inPosition && playerInSightRange && !playerInAttackRange && canChasePlayer)
+        {
+            ChasePlayer();
+        }
 
-        if(playerInAttackRange && playerInSightRange)
+        if (playerInAttackRange && playerInSightRange)
         {
             AttackPlayer();
         }
 
+        if (!inPosition && attackEnemyFirstTime)
+        {
+            ReachPatrolPosition();
+        }
+    }
 
-
-
+    private void ReachPatrolPosition()
+    {
+        transform.LookAt(patrolArea.position);
+        agent.SetDestination(patrolArea.position);
     }
 
     private void Patroling()
     {
-        //if (!walkPointSet)
-        //{
-        //    SearchWalkingPoint();
-        //}
-        //if (walkPointSet)
-        //{
-        //    agent.SetDestination(walkPoint);
-        //}
-        //Debug.Log(name);
-        agent.SetDestination(dest);
+        transform.LookAt(patrolPoints[currentPatrolIndex].position);
+        agent.SetDestination(patrolPoints[currentPatrolIndex].position);
 
-        if(agent.remainingDistance <= 0)
+        if(agent.remainingDistance <= 0.1f)
         {
-            dest = (dest == start) ? end : start;
+            currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Count; 
         }
-
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        //Reached walkpoint
-        if(distanceToWalkPoint.magnitude < 1f)
-        {
-            walkPointSet = false;
-        }
+        
     }
 
-    //private void SearchWalkingPoint()
-    //{
-    //    float randomZ = Random.Range(-walkPointRange, walkPointRange);
-    //    float randomX = Random.Range(-walkPointRange, walkPointRange);
-
-    //    walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
-    //    if(Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
-    //    {
-    //        walkPointSet = true;
-    //    }
-    //}
-
-    //private void ChasePlayer()
-    //{
-
-    //}
+    private void ChasePlayer()
+    {
+        transform.LookAt(player.position);
+        agent.SetDestination(player.position);
+    }
 
     private void AttackPlayer()
     {
-        //Make enemy stay
-        agent.SetDestination(transform.position);
-
+        attackEnemyFirstTime = true;
         transform.LookAt(player);
+        agent.SetDestination(transform.position);
 
         if (!alreadyAttacked)
         {
@@ -145,7 +133,6 @@ public class Enemy : MonoBehaviour
             //rb.AddForce(transform.up * 8f, ForceMode.Impulse);
 
             SoundManager.PlaySound("gunshot");
-
             Vector3 velocity = (player.position - raycastOrigin.position).normalized * bulletSpeed;
             var bullet = CreateBullet(raycastOrigin.position, velocity);
             Debug.Log("bullet");
@@ -182,15 +169,28 @@ public class Enemy : MonoBehaviour
         {
             Instantiate(coreItem, transform.position, Quaternion.identity);
             animator.SetBool("isDead", true);
-            Invoke(nameof(DestroyEnemy), 0.5f);
+            bool destroyEnemy = false;
+            if (!destroyEnemy)
+            {
+                destroyEnemy = true;
+                DestroyEnemy();
+            }
         }
     }
 
     private void DestroyEnemy()
     {
-        Destroy(gameObject);
+        bool alreadyClean = false;
+        if(!alreadyClean)
+        {
+            alreadyClean = true;
+            GenerateEnemies ge = FindObjectOfType<GenerateEnemies>();
+            ge.cleanPatroliExist(name, patrolIndex, spawnDelay);
+        }
+        Destroy(gameObject,5f);
     }
 
+    #endregion
 
     class Bullet
     {

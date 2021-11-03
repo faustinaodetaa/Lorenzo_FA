@@ -19,6 +19,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject dialogueCamera;
     public GameObject mainCamera;
     public GameObject shoulderCamera;
+    Player player;
 
 
 

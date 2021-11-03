@@ -33,6 +33,9 @@ public class Player : MonoBehaviour
     public string message;
     public string currentWeapon;
     public GameObject messageUI;
+    public bool isRestart;
+    public GameObject shield;
+    bool shieldActive;
 
 
     // Start is called before the first frame update
@@ -64,7 +67,7 @@ public class Player : MonoBehaviour
             isFiring = false;
             
         }
-        if(ammo <= 0)
+        if(ammo <= 0 || Input.GetKeyDown(KeyCode.R))
         {
             message = "Reloading...";
             ammo += 30;
@@ -116,8 +119,11 @@ public class Player : MonoBehaviour
         {
             if (g.name.Contains("CoreItem"))
             {
-                Debug.Log("core item");
                 coreItems++;
+                if(coreItems >= 9)
+                {
+                    coreItems = 9;
+                }
             }
             else
             {
@@ -129,10 +135,7 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        Debug.Log("get " + damage);
-        healthBar.SetHealth(currentHealth);
-        //bloodSplatter.SetActive(true);
+        
 
         if(currentHealth <= 0)
         {
@@ -140,7 +143,19 @@ public class Player : MonoBehaviour
             deathMenu.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            Time.timeScale = 0f;
+            isRestart = true;
+            //Time.timeScale = 0f;
+        }
+
+        if (shieldActive)
+        {
+
+        }else if (!shieldActive)
+        {
+            currentHealth -= damage;
+            Debug.Log("get " + damage);
+            healthBar.SetHealth(currentHealth);
+            //bloodSplatter.SetActive(true);
         }
 
         //currentSkill -= damage;
@@ -152,9 +167,13 @@ public class Player : MonoBehaviour
         ammo += 30;
     }
 
-    public void useShield()
+    public IEnumerator useShield()
     {
-
+        shield.SetActive(true);
+        shieldActive = true;
+        yield return new WaitForSeconds(7f);
+        shieldActive = false;
+        shield.SetActive(false);
     }
 
     public void useHealthPotion()
@@ -175,13 +194,18 @@ public class Player : MonoBehaviour
         {
             currentSkill = maxSkill;
         }
-        Debug.Log("nambah skill");
         skillBar.SetSkill(currentSkill);
     }
 
-    public void usePainKiller()
+    public IEnumerator usePainKiller()
     {
-
+        currentHealth += 450;
+        healthBar.SetHealth(currentHealth);
+        for (int i = 0; i <= 5; i++)
+        {
+            yield return new WaitForSeconds(1f);
+            TakeDamage(90);
+        }
     }
 
     public IEnumerator useDamageMultiplier()

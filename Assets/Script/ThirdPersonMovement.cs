@@ -7,7 +7,7 @@ public class ThirdPersonMovement : PlayerController
 {
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
-    Animator animator;
+    public Animator animator, planeAnimator;
     RaycastWeapon weapon;
     public float rotationSpeed = 3f;
     public float aimDuration = 0.3f;
@@ -162,6 +162,10 @@ public class ThirdPersonMovement : PlayerController
             mainCamera.SetActive(false);
             planeCamera.SetActive(true);
             victoryMenu.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            //Time.timeScale = 0f;
+            planeAnimator.SetBool("isFlying", true);
         }
 
     }

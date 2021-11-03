@@ -16,7 +16,7 @@ public class CannonBullet : MonoBehaviour
         }
         else
         {
-            if (other.name.ToLower().Contains("floor") || other.name.ToLower().Contains("ground"))
+            if (other.name.ToLower().Contains("floor") || other.name.ToLower().Contains("ground") || other.name.ToLower().Contains("street"))
             {
                 GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
                 effect.GetComponent<ParticleSystem>().Play();

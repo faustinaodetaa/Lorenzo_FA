@@ -8,7 +8,7 @@ public class CannonBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("kena");
+        //Debug.Log("kena");
         if (other.tag == "Player")
         {
             Debug.Log("kena player");

@@ -12,6 +12,7 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         //Debug.Log("tes update");
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -36,6 +37,7 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = false;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
         //Debug.Log("tes resume");
     }
 
@@ -44,7 +46,9 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         AudioListener.volume = 0;
+        //Time.fixedDeltaTime = 0f;
         GameIsPaused = true;
+        
         //Debug.Log("tes pause");
     }
 

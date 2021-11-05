@@ -24,7 +24,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: 
+    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
+      human bone 'Head' not found\n"
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -32,7 +33,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -86,7 +87,182 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: robot02_high2(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: U3DRoot
+      parentName: robot02_high2(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: perspShape
+      parentName: U3DRoot
+      position: {x: 0.012565926, y: 0.016429892, z: 0.03395162}
+      rotation: {x: 0.98202133, y: -0.012444173, z: -0.17492466, w: -0.06986119}
+      scale: {x: 1, y: 1, z: 1}
+    - name: robot02_mesh
+      parentName: U3DRoot
+      position: {x: -0, y: 0.000017719269, z: -0.0021275817}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: robot02_meshShape 1
+      parentName: robot02_mesh
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: COG
+      parentName: U3DRoot
+      position: {x: -6.731695e-12, y: 0.012875105, z: -0.0019880985}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pelvis
+      parentName: COG
+      position: {x: -2.3999842e-11, y: -0.000719521, z: 1.8626451e-11}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rt_hip
+      parentName: pelvis
+      position: {x: 0.0014430451, y: -0.0009963786, z: 9.3132255e-12}
+      rotation: {x: 0.41295087, y: 0.86143005, z: -0.29528275, w: 0.014764162}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rt_hipEND
+      parentName: rt_hip
+      position: {x: -0.0019772116, y: 0, z: 1.0234868e-18}
+      rotation: {x: -0.59751725, y: -0.597517, z: 0.37811813, w: -0.37811807}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: rt_thigh
+      parentName: rt_hipEND
+      position: {x: -0.0015383711, y: -1.110223e-18, z: 1.110223e-18}
+      rotation: {x: 0.12971185, y: 0.33247575, z: -0.5580208, w: 0.74916464}
+      scale: {x: 0.9999999, y: 1.0000001, z: 1}
+    - name: rt_knee2
+      parentName: rt_thigh
+      position: {x: 0.0015141183, y: -0.0021736503, z: -0.002274881}
+      rotation: {x: 0.000000111758695, y: 0.7071068, z: 0.00000008940696, w: 0.70710677}
+      scale: {x: 1.0000004, y: 0.9999999, z: 1.0000004}
+    - name: rt_ankle
+      parentName: rt_knee2
+      position: {x: -0.0053452644, y: -0.004756727, z: -0.00010497078}
+      rotation: {x: -0.21805362, y: -0.75387555, z: 0.00875022, w: 0.61971575}
+      scale: {x: 0.9999998, y: 1.0000001, z: 0.99999994}
+    - name: rt_ball
+      parentName: rt_ankle
+      position: {x: -2.9802322e-10, y: -0.0015875619, z: -0.00022814791}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 0.9999999, z: 1}
+    - name: rt_fronttoe_dn_aim
+      parentName: rt_ball
+      position: {x: 0.000007125437, y: 0.000832873, z: 0.0036948752}
+      rotation: {x: -0.29731935, y: -0.29681343, z: -0.6411323, w: 0.6422246}
+      scale: {x: 1.0000002, y: 1, z: 1}
+    - name: rt_backtoe_dn_aim
+      parentName: rt_ball
+      position: {x: 0.0000044901667, y: -0.0004103326, z: -0.0028543656}
+      rotation: {x: 0.698999, y: -0.6978099, z: -0.11049919, w: -0.110687315}
+      scale: {x: 1.0000004, y: 1.0000004, z: 1.0000005}
+    - name: rt_fronttoe_up_aim
+      parentName: rt_knee2
+      position: {x: -0.0047087404, y: -0.0020296043, z: -0.000107007174}
+      rotation: {x: -0.66390264, y: -0.24337906, z: 0.24396367, w: 0.66368794}
+      scale: {x: 1.0000004, y: 1.0000002, z: 1.0000001}
+    - name: rt_backtoe_up_aim
+      parentName: rt_knee2
+      position: {x: -0.0034899937, y: -0.0029767274, z: -0.00010724455}
+      rotation: {x: -0.4165418, y: -0.5713957, z: 0.5726891, w: 0.41476148}
+      scale: {x: 1.0000004, y: 1.0000001, z: 0.99999994}
+    - name: lf_hip
+      parentName: pelvis
+      position: {x: -0.0014430499, y: -0.0009963809, z: 7.091403e-11}
+      rotation: {x: 0.014764129, y: 0.29528296, z: 0.86143005, w: -0.41295078}
+      scale: {x: 1, y: 1, z: 1}
+    - name: lf_hipEND
+      parentName: lf_hip
+      position: {x: 0.0019772125, y: -2.220446e-18, z: 5.2041703e-20}
+      rotation: {x: 0.5975171, y: 0.59751725, z: -0.37811807, w: 0.37811807}
+      scale: {x: 0.9999999, y: 0.9999999, z: 0.9999997}
+    - name: lf_thigh
+      parentName: lf_hipEND
+      position: {x: 0.0015383731, y: 1.110223e-18, z: 5.827798e-10}
+      rotation: {x: -0.12847602, y: -0.33235592, z: 0.55766493, w: -0.7496955}
+      scale: {x: 1.0000001, y: 1.0000006, z: 1.0000007}
+    - name: lf_knee2
+      parentName: lf_thigh
+      position: {x: -0.0015140114, y: 0.002181941, z: 0.0022936377}
+      rotation: {x: 0.000000070780516, y: 0.7071068, z: 0.00000008940697, w: 0.7071068}
+      scale: {x: 1.0000001, y: 1.0000005, z: 1.0000002}
+    - name: lf_ankle
+      parentName: lf_knee2
+      position: {x: 0.0053452747, y: 0.004756737, z: 0.000104975}
+      rotation: {x: -0.21516073, y: -0.7504809, z: 0.006747118, w: 0.624851}
+      scale: {x: 1, y: 1.0000007, z: 1.0000006}
+    - name: lf_ball
+      parentName: lf_ankle
+      position: {x: -1.6653345e-18, y: 0.0015875625, z: 0.00022814999}
+      rotation: {x: -1.16415294e-10, y: -0, z: 1.16415294e-10, w: 1}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: lf_fronttoe_dn_aim
+      parentName: lf_ball
+      position: {x: -0.000007125, y: -0.00083287497, z: -0.003694875}
+      rotation: {x: -0.29731923, y: -0.29681346, z: -0.6411324, w: 0.6422246}
+      scale: {x: 1.0000001, y: 1, z: 1.0000001}
+    - name: lf_backtoe_dn_aim
+      parentName: lf_ball
+      position: {x: -0.0000044999997, y: 0.00041032748, z: 0.002854375}
+      rotation: {x: -0.6989991, y: 0.6978099, z: 0.11049908, w: 0.11068739}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1}
+    - name: lf_fronttoe_up_aim
+      parentName: lf_knee2
+      position: {x: 0.0047087446, y: 0.0020296124, z: 0.000107}
+      rotation: {x: 0.6640003, y: 0.24311253, z: -0.24424249, w: -0.6635854}
+      scale: {x: 1.0000005, y: 1.0000004, z: 1.0000007}
+    - name: lf_backtoe_up_aim
+      parentName: lf_knee2
+      position: {x: 0.0034899977, y: 0.0029767375, z: 0.0001072375}
+      rotation: {x: 0.41613233, y: 0.57169384, z: -0.57240164, w: -0.4151582}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000007}
+    - name: body
+      parentName: COG
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rt_shoulder
+      parentName: body
+      position: {x: 0.004250533, y: 0.00032373428, z: -0.0008377893}
+      rotation: {x: 0.00000006204699, y: 1, z: -0.00000006204699, w: 0.000000043711385}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rt_elbow
+      parentName: rt_shoulder
+      position: {x: -0.0025, y: 0, z: -5.551115e-19}
+      rotation: {x: -0.11153156, y: -0.71408767, z: 0.000000016050992, w: 0.69111466}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rt_wrist
+      parentName: rt_elbow
+      position: {x: 0.000024773479, y: -0.00037276506, z: 0.0023098753}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: lf_shoulder
+      parentName: body
+      position: {x: -0.004250537, y: 0.00032371047, z: -0.0008377899}
+      rotation: {x: -0, y: -0, z: 1, w: 0.000000057162303}
+      scale: {x: 1, y: 1, z: 1}
+    - name: lf_elbow
+      parentName: lf_shoulder
+      position: {x: 0.0025, y: 2.220446e-18, z: -2.7755575e-19}
+      rotation: {x: -0.11152302, y: -0.71408796, z: 0.00000017107503, w: 0.6911158}
+      scale: {x: 1, y: 1, z: 1}
+    - name: lf_wrist
+      parentName: lf_elbow
+      position: {x: -0.000024774998, y: 0.0003727375, z: -0.0023098812}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: robot02_meshShape
+      parentName: U3DRoot
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -97,13 +273,13 @@ ModelImporter:
     globalScale: 0.01
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 1
+  animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 0
   additionalBone: 0
   userData: 

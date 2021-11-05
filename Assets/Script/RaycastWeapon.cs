@@ -23,6 +23,8 @@ public class RaycastWeapon : MonoBehaviour
     public Transform raycastOrigin;
     public Transform raycastDestination;
     Enemy enemy;
+    Boss boss;
+    Mech mech;
     public Player player;
     public GameObject magazine;
     public int damage;
@@ -111,12 +113,36 @@ public class RaycastWeapon : MonoBehaviour
 
             bullet.tracer.transform.position = hitInfo.point;
             bullet.time = maxLifetime;
-            Debug.Log(hitInfo.collider.name);
+            //Debug.Log(hitInfo.collider.name);
             if (hitInfo.collider.gameObject.tag.Equals("Enemy"))
             {
                 Debug.Log("enemy dmg");
+                //if(enemy == null)
+                //{
+                //    Debug.Log("null");
+                //}
                 enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
-                enemy.TakeDamage(damage);
+                if (enemy == null)
+                {
+
+                    boss = hitInfo.collider.gameObject.GetComponent<Boss>();
+                    if(boss == null)
+                    {
+                        mech = hitInfo.collider.gameObject.GetComponent<Mech>();
+                        mech.TakeDamage(damage);
+                    }
+                    else
+                    {
+                        boss.TakeDamage(damage);
+
+                    }
+                }
+                else
+                {
+                    
+                    enemy.TakeDamage(damage);
+
+                }
                 player.currentSkill += 2;
                 skillBar.SetSkill(player.currentSkill);
             }
@@ -160,4 +186,10 @@ public class RaycastWeapon : MonoBehaviour
     {
         isFiring = false;
     }
+
+    void Update()
+    {
+        SimulateBullets(10);
+    }
+
 }

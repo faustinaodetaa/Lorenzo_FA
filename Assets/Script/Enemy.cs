@@ -17,16 +17,19 @@ public class Enemy : MonoBehaviour
     public HealthBar healthBar;
     public int damage;
     public int spawnDelay;
+    public int enemyBullet;
 
 
     //Attack
     public float timeBetweenAttacks;
     bool alreadyAttacked;
-    //public GameObject projectile;
-    
+    public GameObject projectile;
+
 
     public Player ken;
     public GameObject coreItem;
+
+    public GameObject bombUI;
 
     
 
@@ -73,6 +76,8 @@ public class Enemy : MonoBehaviour
     {
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+
+        if (!agent.name.Equals("Kyle(Clone)")) canChasePlayer = true;
 
         if (inPosition && !playerInSightRange && !playerInAttackRange)
         {
@@ -125,6 +130,59 @@ public class Enemy : MonoBehaviour
         transform.LookAt(player);
         agent.SetDestination(transform.position);
 
+        //enemy reload
+        if (agent.name.Equals("Kyle(Clone)"))
+        {
+           
+            enemyBullet--;
+            Debug.Log("Kyle with bullet: " + enemyBullet);
+            if (enemyBullet <= 0)
+            {
+                Debug.Log("reloading");
+                animator.SetBool("isReloading", true);
+                SoundManager.PlaySound("reload");
+                Invoke(nameof(ResetReloading), 15);
+                Debug.Log("stop reloading");
+                enemyBullet = 20;
+            }
+        }
+        else if (agent.name.Equals("Warrior(Clone)"))
+        {
+            enemyBullet--;
+            if (enemyBullet <= 0)
+            {
+                Debug.Log("reloading");
+                animator.SetBool("isReloading", true);
+                SoundManager.PlaySound("reload");
+                Invoke(nameof(ResetReloading), 15);
+                enemyBullet = 15;
+            }
+        }
+        else if (agent.name.Equals("Drone(Clone)"))
+        {
+            enemyBullet--;
+            if (enemyBullet <= 0)
+            {
+                Debug.Log("reloading");
+                animator.SetBool("isReloading", true);
+                SoundManager.PlaySound("reload");
+                Invoke(nameof(ResetReloading), 15);
+                enemyBullet = 30;
+            }
+        }
+        else if (agent.name.Equals("Mech(Clone)"))
+        {
+            enemyBullet--;
+            if (enemyBullet <= 0)
+            {
+                Debug.Log("reloading");
+                animator.SetBool("isReloading", true);
+                SoundManager.PlaySound("reload");
+                Invoke(nameof(ResetReloading), 15);
+                enemyBullet = 20;
+            }
+        }
+
         if (!alreadyAttacked)
         {
             //Attack 
@@ -133,9 +191,19 @@ public class Enemy : MonoBehaviour
             //rb.AddForce(transform.up * 8f, ForceMode.Impulse);
 
             SoundManager.PlaySound("gunshot");
-            Vector3 velocity = (player.position - raycastOrigin.position).normalized * bulletSpeed;
+            //Vector3 velocity = (player.position - raycastOrigin.position).normalized * bulletSpeed;
+            //var bullet = CreateBullet(raycastOrigin.position, velocity);
+            ////Debug.Log("bullet");
+            //bullets.Add(bullet);
+            //Debug.Log(agent.name);
+            foreach (var particle in muzzleFlash)
+            {
+                particle.Emit(1);
+
+            }
+
+            Vector3 velocity = (raycastDestination.position - raycastOrigin.position).normalized * bulletSpeed;
             var bullet = CreateBullet(raycastOrigin.position, velocity);
-            Debug.Log("bullet");
             bullets.Add(bullet);
 
 
@@ -145,7 +213,26 @@ public class Enemy : MonoBehaviour
             ken.bloodSplatter.SetActive(true);
             ken.TakeDamage(damage);
         }
+        
         //ken.bloodSplatter.SetActive(false);
+    }
+
+    public void setInRange(bool range)
+    {
+        range = false;
+        if (range)
+        {
+            bombUI.SetActive(true);
+        }
+        else
+        {
+            bombUI.SetActive(false);
+        }
+    }
+
+    private void ResetReloading()
+    {
+        animator.SetBool("isReloading", false);
     }
 
     private void ResetAttack()
@@ -325,7 +412,7 @@ public class Enemy : MonoBehaviour
         Vector3 velocity = (raycastDestination.position - raycastOrigin.position).normalized * bulletSpeed;
         var bullet = CreateBullet(raycastOrigin.position, velocity);
         bullets.Add(bullet);
-
+        
     }
 
     public void StopFiring()

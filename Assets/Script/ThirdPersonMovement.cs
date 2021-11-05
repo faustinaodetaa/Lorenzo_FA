@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Animations.Rigging;
 
 public class ThirdPersonMovement : PlayerController
@@ -17,6 +18,7 @@ public class ThirdPersonMovement : PlayerController
     public Cinemachine.AxisState yAxis;
     int isAimingParam = Animator.StringToHash("isAiming");
     public static bool ShootingMode = false;
+    public Text stopwatchTxt;
 
     public GameObject playerHUD;
     //public GameObject dialogueUI;
@@ -25,6 +27,7 @@ public class ThirdPersonMovement : PlayerController
     public GameObject mainCamera;
     public GameObject shoulderCamera;
     public GameObject planeCamera;
+    public GameObject player;
 
     public static bool shoulderMode = false;
 
@@ -56,10 +59,14 @@ public class ThirdPersonMovement : PlayerController
         //var direction = Vector3.forward * vertical + Vector3.right * horizontal;
         var direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        xAxis.Update(Time.fixedDeltaTime);
-        yAxis.Update(Time.fixedDeltaTime);
+        if (!PauseMenu.GameIsPaused)
+        {
+            xAxis.Update(Time.fixedDeltaTime);
+            yAxis.Update(Time.fixedDeltaTime);
 
-        cameraLookAt.eulerAngles = new Vector3(yAxis.Value, xAxis.Value, 0);
+            cameraLookAt.eulerAngles = new Vector3(yAxis.Value, xAxis.Value, 0);
+
+        }
 
         bool isAiming = Input.GetMouseButton(1);
         animator.SetBool(isAimingParam, isAiming);
@@ -159,12 +166,17 @@ public class ThirdPersonMovement : PlayerController
 
         if (Input.GetKeyDown(KeyCode.F))
         {
+            SoundManager.PlaySound("victory");
+            Debug.Log("terbang");
             mainCamera.SetActive(false);
+            player.SetActive(false);
+            stopwatchTxt.text = Stopwatch.lastTime;
+            playerHUD.SetActive(false);
             planeCamera.SetActive(true);
             victoryMenu.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            //Time.timeScale = 0f;
+
             planeAnimator.SetBool("isFlying", true);
         }
 

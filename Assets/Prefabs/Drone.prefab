@@ -31,8 +31,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3641894684860271076}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -1.59, z: 0}
+  m_LocalScale: {x: 0.42415118, y: 0.42415118, z: 0.42415118}
   m_Children:
   - {fileID: 4457023244767095194}
   m_Father: {fileID: 0}
@@ -125,7 +125,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1.9812009
-  m_Speed: 3.5
+  m_Speed: 3.14
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -133,8 +133,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 3.6570005
-  m_BaseOffset: 1.8285003
+  m_Height: 2.02
+  m_BaseOffset: 8.88
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &-8502862728178294011
@@ -162,11 +162,14 @@ MonoBehaviour:
   healthBar: {fileID: 8248929756897609701}
   damage: 10
   spawnDelay: 50
+  enemyBullet: 30
   timeBetweenAttacks: 0.5
+  projectile: {fileID: 0}
   ken: {fileID: 0}
   coreItem: {fileID: 7241455216954182561, guid: 9325f5fef4bfc564d9aef09eefe5af93, type: 3}
-  sightRange: 3
-  attackRange: 3
+  bombUI: {fileID: 5191196485617331862, guid: cd1f6e72dd6ef8142a37a61ade0f6b0d, type: 3}
+  sightRange: 5
+  attackRange: 5
   playerInSightRange: 0
   playerInAttackRange: 0
   canChasePlayer: 0
@@ -181,11 +184,11 @@ MonoBehaviour:
   bulletSpeed: 100
   bulletDrop: 0
   muzzleFlash: []
-  hitEffect: {fileID: 0}
-  tracerEffect: {fileID: 0}
-  raycastOrigin: {fileID: 0}
-  raycastDestination: {fileID: 0}
-  bulletDamage: 0
+  hitEffect: {fileID: 4331931961140162267, guid: d2e4dde76b3ab1b42aa42a90d0ca6901, type: 3}
+  tracerEffect: {fileID: 181032771214138736, guid: 82181f5599fa96545ac87dbe5f0ba441, type: 3}
+  raycastOrigin: {fileID: 1767431871016992259, guid: f2d53b0776f45824189fb203b997bd1b, type: 3}
+  raycastDestination: {fileID: 8151119585889949107, guid: a89d115592a218945a0cf32bab60bb7a, type: 3}
+  bulletDamage: 10
 --- !u!95 &6526405416435604842
 Animator:
   serializedVersion: 3
@@ -195,7 +198,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3641894684860271076}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 28723f10c2a8e094a9351e892f5271b8, type: 3}
   m_Controller: {fileID: 9100000, guid: b6eba8e0423d43b4eb37bfdba3e0be88, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0

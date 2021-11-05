@@ -6,6 +6,7 @@ public class DoorController : MonoBehaviour
 {
     public GameObject character;
     private Animator animator;
+    public Animator msgAnimator;
     private List<Animator> childAnimatorList = new List<Animator>();
     public Player player;
     private bool doorOpen;
@@ -39,6 +40,7 @@ public class DoorController : MonoBehaviour
 
                 if (doorOpen)
                 {
+
                     Debug.Log("Core item > 9");
                     SoundManager.PlaySound("basement");
 
@@ -54,11 +56,14 @@ public class DoorController : MonoBehaviour
                 }
                 else
                 {
+                    
                     player.message = "Core item is not enough...";
+                    msgAnimator.SetBool("isOpen", true);
                     player.messageDisplay.text = player.message;
                     Debug.Log("Core item < 9");
                     //Invoke(nameof(player.displayMessage), 5);
                 }
+                //msgAnimator.SetBool("isOpen", false);
         }
             else
             {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpecialAttack : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class SpecialAttack : MonoBehaviour
     public GameObject lightningEffect;
 
     //Radius Visualization
-    //public LineRenderer radiusLine;
+    public LineRenderer radiusLine;
     public int segments = 40;
     public float xradius = 10f;
     public float yradius = 10f;
@@ -29,95 +30,99 @@ public class SpecialAttack : MonoBehaviour
     public Player player;
     public SkillPointsBar skillBar;
 
+    public Text messageDisplay;
+    public string message;
+    public Animator animator;
+
 
     void initSpecialEffect()
     {
         vertex = new List<GameObject>();
         PerformSpecialEffect();
-        //initRadius();
+        initRadius();
     }
 
-    //void initRadius()
-    //{
-    //    radiusLine.positionCount = segments + 1;
-    //    //radiusLine.SetVertexCount(segments + 1);
-    //    radiusLine.useWorldSpace = false;
-    //    CreatePoints();
-    //    radiusLine.gameObject.SetActive(false);
-    //}
+    void initRadius()
+    {
+        radiusLine.positionCount = segments + 1;
+        //radiusLine.SetVertexCount(segments + 1);
+        radiusLine.useWorldSpace = false;
+        CreatePoints();
+        radiusLine.gameObject.SetActive(false);
+    }
 
-    //void CreatePoints()
-    //{
-    //    float x;
-    //    float y = 0f;
-    //    float z;
+    void CreatePoints()
+    {
+        float x;
+        float y = 0f;
+        float z;
 
-    //    float angle = 20f;
+        float angle = 20f;
 
-    //    for (int i = 0; i < (segments + 1); i++)
-    //    {
-    //        x = Mathf.Sin(Mathf.Deg2Rad * angle) * xradius;
-    //        z = Mathf.Cos(Mathf.Deg2Rad * angle) * yradius;
+        for (int i = 0; i < (segments + 1); i++)
+        {
+            x = Mathf.Sin(Mathf.Deg2Rad * angle) * xradius;
+            z = Mathf.Cos(Mathf.Deg2Rad * angle) * yradius;
 
-    //        radiusLine.SetPosition(i, new Vector3(x, y, z));
+            radiusLine.SetPosition(i, new Vector3(x, y, z));
 
-    //        angle += (360f / segments);
-    //    }
-    //}
+            angle += (360f / segments);
+        }
+    }
 
-    //IEnumerator turnOnRadiusLine()
-    //{
-    //    checkEnemyInRange = true;
-    //    radiusLine.gameObject.SetActive(true);
+    IEnumerator turnOnRadiusLine()
+    {
+        checkEnemyInRange = true;
+        radiusLine.gameObject.SetActive(true);
 
-    //    yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(5);
 
-    //    radiusLine.gameObject.SetActive(false);
-    //    checkEnemyInRange = false;
-    //}
+        radiusLine.gameObject.SetActive(false);
+        checkEnemyInRange = false;
+    }
 
-    //IEnumerator SetBombUIEnemyInRadius(Vector3 center)
-    //{
-    //    float startTime = Time.time;
-    //    float timeElapsed = 0;
-    //    while (timeElapsed <= 5)
-    //    {
-    //        timeElapsed = Time.time - startTime;
-    //        hitColliders = null;
-    //        hitColliders = Physics.OverlapSphere(transform.position, radius, whatIsEnemy);
-    //        V = hitColliders.Length;
-    //        if (prevHitColliders != null)
-    //        {
-    //            foreach (var phc in prevHitColliders)
-    //            {
-    //                bool flagExist = false;
-    //                foreach (var hc in hitColliders)
-    //                {
-    //                    if (phc.Equals(hc))
-    //                    {
-    //                        flagExist = true;
-    //                        break;
-    //                    }
-    //                }
-    //                if (!flagExist)
-    //                {
-    //                    phc.GetComponent<EnemyAI>().setInRange(false);
-    //                }
-    //            }
-    //        }
-    //        foreach (var h in hitColliders)
-    //        {
-    //            h.GetComponent<EnemyAI>().setInRange(true);
-    //        }
+    IEnumerator SetBombUIEnemyInRadius(Vector3 center)
+    {
+        float startTime = Time.time;
+        float timeElapsed = 0;
+        while (timeElapsed <= 5)
+        {
+            timeElapsed = Time.time - startTime;
+            hitColliders = null;
+            hitColliders = Physics.OverlapSphere(transform.position, radius, whatIsEnemy);
+            V = hitColliders.Length;
+            if (prevHitColliders != null)
+            {
+                foreach (var phc in prevHitColliders)
+                {
+                    bool flagExist = false;
+                    foreach (var hc in hitColliders)
+                    {
+                        if (phc.Equals(hc))
+                        {
+                            flagExist = true;
+                            break;
+                        }
+                    }
+                    if (!flagExist)
+                    {
+                        phc.GetComponent<Enemy>().setInRange(false);
+                    }
+                }
+            }
+            foreach (var h in hitColliders)
+            {
+                h.GetComponent<Enemy>().setInRange(true);
+            }
 
-    //        prevHitColliders = hitColliders;
-    //        yield return new WaitForSeconds(0);
-    //    }
-    //    foreach (var phc in prevHitColliders)
-    //    {
-    //        phc.GetComponent<EnemyAI>().setInRange(false);
-    //    }
-    //}
+            prevHitColliders = hitColliders;
+            yield return new WaitForSeconds(0);
+        }
+        foreach (var phc in prevHitColliders)
+        {
+            phc.GetComponent<Enemy>().setInRange(false);
+        }
+    }
     //#endregion
 
 
@@ -202,7 +207,7 @@ public class SpecialAttack : MonoBehaviour
             //lightningScript.Duration = 5f;
             Destroy(lightning, 6f);
 
-            if (V > 1) //Kalau Single Vertex gaperlu add parent karena diri dia sendiri
+            if (V > 1) 
             {
                 vertexConnections[parent[i]].Add(vertex1);
             }
@@ -217,7 +222,13 @@ public class SpecialAttack : MonoBehaviour
         }
         player.currentSkill -= 75;
         skillBar.SetSkill(player.currentSkill);
-        Debug.Log("Play sound");
+        if(player.currentSkill <= 0)
+        {
+            animator.SetBool("isOpen", true);
+            message = "Not enough skill!";
+            messageDisplay.text = message;
+        }
+        //Debug.Log("Play sound");
         SoundManager.PlaySound("thunder");
     }
     void PerformSpecialEffect()

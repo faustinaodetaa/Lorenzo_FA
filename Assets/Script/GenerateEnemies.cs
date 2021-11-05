@@ -40,7 +40,7 @@ public class GenerateEnemies : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("GenerateEnemies >> Start >> PatrolPositionCount:" + patrolPositions.Count);
+        //Debug.Log("GenerateEnemies >> Start >> PatrolPositionCount:" + patrolPositions.Count);
         foreach (Patroli p in patrolPositions)
         {
             p.satpamExist = new bool[p.patrolPos.Length];
@@ -52,7 +52,7 @@ public class GenerateEnemies : MonoBehaviour
     {
         foreach (Patroli p in patrolPositions)
         {
-            Debug.Log("GenerateEnemies >> " + p.enemyType + " Count: " + p.enemyList.Count);
+            //Debug.Log("GenerateEnemies >> " + p.enemyType + " Count: " + p.enemyList.Count);
             if (p.enemyList.Count < p.patrolPos.Length)
                 generateEnemy(p);
             updateEnemyArrival(p);
@@ -65,7 +65,7 @@ public class GenerateEnemies : MonoBehaviour
         {
             if (e.enemy == null)
             {
-                Debug.Log("GenerateEnemies >> Enemy Null -> ded");
+                //Debug.Log("GenerateEnemies >> Enemy Null -> ded");
                 p.enemyList.Remove(e);
                 break;
             }
@@ -109,7 +109,7 @@ public class GenerateEnemies : MonoBehaviour
     {
         Transform destination = p.patrolPos[patrolIndex];
         GameObject enemy = Instantiate(p.enemyPrefabs, p.spawnPosition.position, Quaternion.identity);
-        Debug.Log("GenerateEnemies >> Spawn: " + enemy.name + " Patrol Index: " + patrolIndex);
+        //Debug.Log("GenerateEnemies >> Spawn: " + enemy.name + " Patrol Index: " + patrolIndex);
         enemy.GetComponent<Enemy>().patrolIndex = patrolIndex;
         enemy.GetComponent<Enemy>().patrolArea = destination;
         NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
@@ -128,10 +128,10 @@ public class GenerateEnemies : MonoBehaviour
 
     Patroli findPatroli(string enemyType)
     {
-        Debug.Log("GenerateEnemies >> PatrolPositionCount:" + patrolPositions.Count);
+        //Debug.Log("GenerateEnemies >> PatrolPositionCount:" + patrolPositions.Count);
         foreach (Patroli p in patrolPositions)
         {
-            Debug.Log("GenerateEnemies >> findPatroli >> enemyType:[" + enemyType+ "] pListEnemyType:["+ p.enemyType +"]");
+            //Debug.Log("GenerateEnemies >> findPatroli >> enemyType:[" + enemyType+ "] pListEnemyType:["+ p.enemyType +"]");
             if (enemyType.ToLower().Contains(p.enemyType.ToLower()))
                 return p;
         }
@@ -140,7 +140,7 @@ public class GenerateEnemies : MonoBehaviour
 
     public void cleanPatroliExist(string enemyType, int patrolIndex, int delay)
     {
-        Debug.Log("GenerateEnemies >> Cleaning Patroli " + patrolIndex + "delay: " + delay);
+        //Debug.Log("GenerateEnemies >> Cleaning Patroli " + patrolIndex + "delay: " + delay);
         StartCoroutine(makePatrolPointEmpty(enemyType, patrolIndex, delay));
     }
 
@@ -151,11 +151,11 @@ public class GenerateEnemies : MonoBehaviour
         {
             yield return new WaitForSeconds(delay);
             p.satpamExist[patrolIndex] = false;
-            Debug.Log("GenerateEnemies >> " + patrolIndex + " Finished Cleaning");
+            //Debug.Log("GenerateEnemies >> " + patrolIndex + " Finished Cleaning");
         }
         else
         {
-            Debug.Log("GenerateEnemies >> Null findPatroli");
+            //Debug.Log("GenerateEnemies >> Null findPatroli");
         }
         yield return null;
     }

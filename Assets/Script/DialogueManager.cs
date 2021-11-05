@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject dialogueCamera;
     public GameObject mainCamera;
     public GameObject shoulderCamera;
-    Player player;
+    public Player player;
 
 
 
@@ -31,27 +32,43 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
-        //Debug.Log("Starting convo with " + dialogue.name);
-        animator.SetBool("IsOpen", true);
+        Debug.Log("player restart :" + player.isRestart);
+        if (!player.isRestart)
+        {
+            Debug.Log("no restart");
+            //Debug.Log("Starting convo with " + dialogue.name);
+            animator.SetBool("IsOpen", true);
 
-        //dialogueUI.SetActive(true);
-        Debug.Log("dialogue");
-        playerHUD.SetActive(false);
-        mainCamera.SetActive(false);
-        shoulderCamera.SetActive(false);
-        dialogueCamera.SetActive(true);
+            //dialogueUI.SetActive(true);
+            Debug.Log("dialogue");
+            playerHUD.SetActive(false);
+            mainCamera.SetActive(false);
+            shoulderCamera.SetActive(false);
+            dialogueCamera.SetActive(true);
         
 
-        nameText.text = dialogue.name;
+            nameText.text = dialogue.name;
 
-        sentences.Clear();
+            sentences.Clear();
 
-        foreach(string sentence in dialogue.sentences)
-        {
-            sentences.Enqueue(sentence);
+            foreach(string sentence in dialogue.sentences)
+            {
+                sentences.Enqueue(sentence);
+            }
+
+            DisplayNextSentence();
         }
-
-        DisplayNextSentence();
+        else
+        {
+            Debug.Log("restart");
+            dialogueCamera.SetActive(false);
+            mainCamera.SetActive(true);
+            playerHUD.SetActive(true);
+            shoulderCamera.SetActive(false);
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        
     }
 
     public void DisplayNextSentence()

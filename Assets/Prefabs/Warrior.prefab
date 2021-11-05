@@ -513,11 +513,14 @@ MonoBehaviour:
   healthBar: {fileID: 6485281052558073279}
   damage: 20
   spawnDelay: 40
+  enemyBullet: 20
   timeBetweenAttacks: 0.5
+  projectile: {fileID: 0}
   ken: {fileID: 0}
   coreItem: {fileID: 7241455216954182561, guid: 9325f5fef4bfc564d9aef09eefe5af93, type: 3}
-  sightRange: 3
-  attackRange: 3
+  bombUI: {fileID: 5191196485617331862, guid: cd1f6e72dd6ef8142a37a61ade0f6b0d, type: 3}
+  sightRange: 5
+  attackRange: 5
   playerInSightRange: 0
   playerInAttackRange: 0
   canChasePlayer: 0

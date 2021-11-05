@@ -36,6 +36,8 @@ public class Player : MonoBehaviour
     public bool isRestart;
     public GameObject shield;
     bool shieldActive;
+    public Animator animator;
+    public GameObject playerHUD;
 
 
     // Start is called before the first frame update
@@ -67,14 +69,39 @@ public class Player : MonoBehaviour
             isFiring = false;
             
         }
-        if(ammo <= 0 || Input.GetKeyDown(KeyCode.R))
+        if((ammo <= 0 || Input.GetKeyDown(KeyCode.R)) && spareAmmo > 0)
         {
+            animator.SetBool("isOpen", true);
             message = "Reloading...";
-            ammo += 30;
-            spareAmmo -= 30;
+            
+
+            
+
+            if (spareAmmo <= 0)
+            {
+                spareAmmo = 0;
+                ammo = 0;
+            }
+
+            if (ammo < 30)
+            {
+                ammo += 30;
+            }
+
+            if (ammo >= 30)
+            {
+                ammo = 30;
+                spareAmmo -= 30;
+            }         
             messageDisplay.text = message;
-            Invoke(nameof(displayMessage), 5);
         }
+        else if(ammo <= 0 && spareAmmo <= 0)
+        {
+            animator.SetBool("isOpen", true);
+            message = "No ammo left!";
+            messageDisplay.text = message;
+        }
+        //animator.SetBool("isOpen", false);
         spareAmmoDisplay.text = spareAmmo.ToString();
         currentWeaponDisplay.text = currentWeapon.ToString();
         coreItemDisplay.text = coreItems.ToString();
@@ -140,11 +167,16 @@ public class Player : MonoBehaviour
         if(currentHealth <= 0)
         {
             Debug.Log("is ded");
+            playerHUD.SetActive(false);
             deathMenu.SetActive(true);
+            Time.timeScale = 0f;
+            SoundManager.PlaySound("death");
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            bloodSplatter.SetActive(false);
             isRestart = true;
-            //Time.timeScale = 0f;
+            //Debug.Log("Player restart in player: " + isRestart);
+            
         }
 
         if (shieldActive)
@@ -164,7 +196,7 @@ public class Player : MonoBehaviour
 
     public void useAmmo()
     {
-        ammo += 30;
+        spareAmmo += 30;
     }
 
     public IEnumerator useShield()

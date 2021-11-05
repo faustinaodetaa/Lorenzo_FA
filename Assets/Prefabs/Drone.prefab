@@ -133,8 +133,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2.02
-  m_BaseOffset: 8.88
+  m_Height: 4.38
+  m_BaseOffset: 5.82
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &-8502862728178294011
@@ -164,7 +164,7 @@ MonoBehaviour:
   spawnDelay: 50
   enemyBullet: 30
   timeBetweenAttacks: 0.5
-  projectile: {fileID: 0}
+  projectile: {fileID: 5261908539032414034, guid: 71d257e512cd48f4592b1d78950d0a10, type: 3}
   ken: {fileID: 0}
   coreItem: {fileID: 7241455216954182561, guid: 9325f5fef4bfc564d9aef09eefe5af93, type: 3}
   bombUI: {fileID: 5191196485617331862, guid: cd1f6e72dd6ef8142a37a61ade0f6b0d, type: 3}

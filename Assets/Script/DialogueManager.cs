@@ -30,10 +30,12 @@ public class DialogueManager : MonoBehaviour
         sentences = new Queue<string>();
     }
 
+    
+
     public void StartDialogue(Dialogue dialogue)
     {
-        Debug.Log("player restart :" + player.isRestart);
-        if (!player.isRestart)
+        Debug.Log("player restart :" + Player.isRestart);
+        if (!Player.isRestart)
         {
             Debug.Log("no restart");
             //Debug.Log("Starting convo with " + dialogue.name);
@@ -61,8 +63,8 @@ public class DialogueManager : MonoBehaviour
         else
         {
             Debug.Log("restart");
-            dialogueCamera.SetActive(false);
             mainCamera.SetActive(true);
+            dialogueCamera.SetActive(false);
             playerHUD.SetActive(true);
             shoulderCamera.SetActive(false);
             Cursor.visible = false;

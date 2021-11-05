@@ -547,7 +547,7 @@ MonoBehaviour:
   spawnDelay: 30
   enemyBullet: 15
   timeBetweenAttacks: 0.425
-  projectile: {fileID: 0}
+  projectile: {fileID: 5261908539032414034, guid: 71d257e512cd48f4592b1d78950d0a10, type: 3}
   ken: {fileID: 0}
   coreItem: {fileID: 7241455216954182561, guid: 9325f5fef4bfc564d9aef09eefe5af93, type: 3}
   bombUI: {fileID: 5191196485617331862, guid: cd1f6e72dd6ef8142a37a61ade0f6b0d, type: 3}

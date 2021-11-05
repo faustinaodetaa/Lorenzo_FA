@@ -187,9 +187,9 @@ public class RaycastWeapon : MonoBehaviour
         isFiring = false;
     }
 
-    void Update()
-    {
-        SimulateBullets(10);
-    }
+    //void Update()
+    //{
+    //    SimulateBullets(10);
+    //}
 
 }

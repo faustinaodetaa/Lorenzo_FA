@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     public string message;
     public string currentWeapon;
     public GameObject messageUI;
-    public bool isRestart;
+    public static bool isRestart;
     public GameObject shield;
     bool shieldActive;
     public Animator animator;

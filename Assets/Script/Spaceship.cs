@@ -28,7 +28,7 @@ public class Spaceship : MonoBehaviour
     void Update()
     {
         //Debug.Log(Vector3.Distance(player.transform.position, transform.position));
-        if (Vector3.Distance(player.transform.position, transform.position) <= 7f)
+        if (Vector3.Distance(player.transform.position, transform.position) <= 5f)
         {
             Debug.Log("masuk spaceship");
             animator.SetBool("isOpen", true);

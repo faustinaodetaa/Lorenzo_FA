@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour
     public static AudioClip door;
     public static AudioClip reload;
     public static AudioClip main;
+    public static AudioClip victory;
     static AudioSource audioSrc;
 
     // Start is called before the first frame update
@@ -24,6 +25,7 @@ public class SoundManager : MonoBehaviour
         basement = Resources.Load<AudioClip>("basement");
         reload = Resources.Load<AudioClip>("reload");
         main = Resources.Load<AudioClip>("main");
+        victory = Resources.Load<AudioClip>("victory");
 
 
         audioSrc = GetComponent<AudioSource>();
@@ -61,6 +63,9 @@ public class SoundManager : MonoBehaviour
                 break;
             case "main":
                 audioSrc.PlayOneShot(main);
+                break;
+            case "victory":
+                audioSrc.PlayOneShot(victory);
                 break;
         }
     }

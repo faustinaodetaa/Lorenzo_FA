@@ -186,9 +186,9 @@ public class Enemy : MonoBehaviour
         if (!alreadyAttacked)
         {
             //Attack 
-            //Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            //rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            //rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
 
             SoundManager.PlaySound("gunshot");
             //Vector3 velocity = (player.position - raycastOrigin.position).normalized * bulletSpeed;
@@ -196,15 +196,15 @@ public class Enemy : MonoBehaviour
             ////Debug.Log("bullet");
             //bullets.Add(bullet);
             //Debug.Log(agent.name);
-            foreach (var particle in muzzleFlash)
-            {
-                particle.Emit(1);
+            //foreach (var particle in muzzleFlash)
+            //{
+            //    particle.Emit(1);
 
-            }
+            //}
 
-            Vector3 velocity = (raycastDestination.position - raycastOrigin.position).normalized * bulletSpeed;
-            var bullet = CreateBullet(raycastOrigin.position, velocity);
-            bullets.Add(bullet);
+            //Vector3 velocity = (raycastDestination.position - raycastOrigin.position).normalized * bulletSpeed;
+            //var bullet = CreateBullet(raycastOrigin.position, velocity);
+            //bullets.Add(bullet);
 
 
 
